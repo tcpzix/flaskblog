@@ -1,0 +1,15 @@
+{% extends 'layout.html' %} {% block headmsg %}
+<div class="container center">
+  <h5>این بخش مطالب</h5>
+  <div class="chip blue">
+    <img src="{{ url_for('static', filename='/img/linux1.png') }}" />
+    Linux
+  </div>
+</div>
+{% endblock headmsg %} {% block body %} {% include '_post.html' %} {% endblock
+%} {% block script %}
+<script>
+  const post = document.querySelectorAll(".post-content");
+  post.forEach((post) => truncate(post, 100, "....."));
+</script>
+{% endblock script %}

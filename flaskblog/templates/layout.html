@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/materialize/materialize-social.css') }}">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Import Fontawsome  -->
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+    <!-- Custom js code and function -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <!-- My Library for Handel HTTP Requests -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/easyhttp.js') }}"></script>
+    <!--Import Custom CSS -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}" />
+    <!-- Import materialize.css -->
+    <link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',filename='/styles/materialize/materialize.min.css') }}" media="screen,projection" />
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>tcpzix</title>
+    {% endif %}
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <!-- Section: main navbar -->
+    <header class="main-header">
+        <nav class="my-nav">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="tcpzix.com" class="brand-logo"><span id="highlight">tcpzix</span></a>
+                    <!--  Side nave button -->
+                    <a href="#" data-activates="side-nav" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <!-- nav menu items -->
+                    <ul class="right hide-on-med-and-down">
+                        {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('logout') }}">خروج</a></li>
+                        <li><a href="{{ url_for('panel') }}">پنل</a></li>
+                        {% endif %}
+                        <li id="{{ 'highlight' if active_page == 'contact' }}"><a href="{{ url_for('contact') }}">تماس با من</a></li>
+                        <li id="{{ 'highlight' if active_page == 'resume' }}"><a href="{{ url_for('resume') }}">رزومه</a></li>
+                        <li id="{{ 'highlight' if active_page == 'sample' }}"><a href="{{ url_for('sample') }}">نمونه کار ها</a></li>
+                        <li id="{{ 'highlight' if active_page == 'home' }}"><a   href="{{ url_for('home') }}">صفحه اصلی</a></li>
+                    </ul>
+                    <!-- end of main nav item  -->
+
+                    <!-- Side nav menu  -->
+                    <ul id="side-nav" class="side-nav">
+                        <li>
+                            <div class="user-view">
+                                <div class="background">
+                                    <img src="{{ url_for('static', filename='/img/slide-bg1.png') }}" />
+                                </div>
+                                <a href="#">
+                                    <img src="{{ url_for('static', filename='/img/tcpzix-avatar.png') }}" alt=""
+                                        class="circle" />
+                                </a>
+                                <span class="name white-text">tcpzix</span>
+                                <a href="mailto:tcpzix@gmail.com?Subject=Hello%20tcp">
+                                    <span class="email white-text">tcpzix@gmail.com</span>
+                                </a>
+                                <div class="inline-elements">
+                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="right-align"><a href="{{ url_for('home') }}">صفحه اصلی</a></li>
+                        <li class="right-align"><a href="{{ url_for('sample') }}">نمونه کار ها</a></li>
+                        <li class="right-align"><a href="{{ url_for('contact') }}">تماس با من</a></li>
+                        <li class="right-align"><a href="{{ url_for('resume') }}">رزومه</a></li>
+                        {% if current_user.is_authenticated %}
+                        <li>
+                            <div class="divider"></div>
+                        </li>
+                        <li>
+                            <a class="subheader">پنل سایت</a>
+                        </li>                       
+                        <li>
+                            <li class="right-align"><a href="{{ url_for('logout') }}">خروج</a></li>
+                            <li class="right-align"><a href="{{ url_for('panel') }}">پنل</a></li>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+<!-- End of nav section -->
+    
+    <!-- Section: Header Message -->
+    <section class="setion section-newsletter my-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 white-text right-align ">
+                    {% block headmsg %}
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                        <h5 class="red-text center-align">{{ message }}</h5>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {% endblock%}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of Header Message section -->
+    
+    {% block body %} {% endblock%}
+
+    <!-- Section: Footer -->
+    <footer class="page-footer main-footer"">
+        <div class=" container">
+        <div class="row">
+            <div class="col l4 offset-l2 s12">
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="{{ url_for('linux_article') }}">linux مقاله های</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{{ url_for('python_article') }}">python مقاله های</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{{ url_for('voip_article') }}">voip مقاله های</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{{ url_for('about') }}">درباره من</a></li>
+                </ul>
+            </div>
+            <div class="col l6 s12">
+                <h5 class="white-text right-align"><span id="highlight">tcpzix</span> وبلاگ</h5>
+                <p class="grey-text text-lighten-4 right-align">در واقع یک رفرنس تخصصی برای خودمه که بعدا به مطالبش
+                    رجوع
+                    کنم</p>
+                <p class="grey-text text-lighten-4 right-align">شما اجازه دارید هر نوع استفاده صحیح و یا غیر اخلاقی
+                    از مطالبش
+                    کنید
+                </p>
+            </div>
+        </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2020 All Right Not Reserverd In This Country
+                <a class="grey-text text-lighten-4 right" href="#!">Self taught & freelance Programmer</a>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Import local materialize js -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            // Custom JS & jQuery here
+
+            //init side nav
+            $('.button-collapse').sideNav({
+                menuWidth: 300,
+                closeOnClick: true,
+                edge: 'right',
+            });
+        });
+    </script>
+    {% block script %}{% endblock script %}
+</body>
+</html>

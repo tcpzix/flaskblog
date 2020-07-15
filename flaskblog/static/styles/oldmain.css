@@ -1,0 +1,292 @@
+@font-face {
+    font-family: 'FarsiFont';
+    src: url('/static/font/IRANSans.woff2') format('woff2'),
+         url('/static/font/myfont.Vazir.eot') format('eot'),
+         url('/static/font/Vazir.ttf') format('truetype');
+  }
+
+
+body{
+    font: 15px/1.5 FarsiFont, Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+   
+}
+
+
+ /* set font for all element like a form ...etc */
+* {
+    font-size: 100%;
+    font-family: FarsiFont, Arial, Helvetica, sans-serif;;
+   }
+
+
+/* Global */
+.container{
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.button_1{
+    height: 38px;
+    background: #e8491d;
+    border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #ffffff;
+}
+
+.dark{
+    padding: 15px;
+    background: #35424a;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+input[placeholder], textarea[placeholder]{
+    text-align: center;
+}
+
+
+/* Heade */
+header{
+    background: #35424a;
+    color: #ffffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+}
+
+header a{
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header li{
+    float: right;
+    display: block;
+    position: relative;
+    padding: 0 20px 0 20px;
+}
+
+header #branding{
+    float: left;
+}
+
+header #branding h1{
+    margin: 0;
+}
+
+header nav{
+    float: right;
+    margin-top: 10px;
+}
+ /* this line highligh the brand name + current page + post athor naem to orang */
+header .highlight, header .current a, ul#services li small .highlight{
+    color: #e8491d;
+    font-weight: bold;
+}
+
+header a:hover{
+    color: #cccccc;
+    font-weight: bold;
+}
+ /* start drop down menu */
+
+ nav ul ul {
+     display: none;
+
+ }
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+    position: relative;
+    display: inline-table;
+}
+
+nav ul:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+
+nav ul li a{
+    display: block;
+  
+    text-decoration: none;
+
+}
+
+
+nav ul ul li{
+    float: none;
+    position: relative;
+}
+
+
+
+
+
+  /* End dropdown menu */
+
+/* showcase */
+#showcase{
+    min-height: 400px;
+    background:url('../img/showcase.jpg') no-repeat 0 -400px;
+    text-align: center;
+    color: #ffffff;
+}
+
+#showcase h1{
+    margin-top: 100px;
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+#showcase p{
+    font-size: 20px;
+}
+
+/* NewsLetter */
+#newsletter{
+    padding: 15px;
+    color: #ffffff;
+    background: #35424a;
+}
+
+#newsletter h1{
+    float: right;
+    margin-top: 15px;
+}
+
+#newsletter form{
+    float: left;
+    margin-top: 15px;
+}
+
+#newsletter input[type="email"]{
+    padding: 4px;
+    height: 25px;
+    width: 250px;
+}
+
+
+/*  Boxes */
+#boxies{
+    margin-top: 20px;
+}
+
+#boxes .box{
+    float: left;
+    text-align: center;
+    width: 30%;
+    padding: 10px;
+
+}
+
+#boxes .box img{
+    width: 90px;
+}
+
+ /* stop change color and underline for index page link and article title link  */
+#boxes.container, ul#services li a, a:hover, a:focus, a:active, a:visited{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/*  sidebar  */
+aside#sidebar{
+    float: left;
+    width: 30%;
+    margin-top: 10px;
+}
+
+aside#sidebar .contact input, aside#sidebar .contact textarea{
+    width: 90%;
+    padding: 5px;
+}
+
+/* Main-col */
+article#main-col{
+    float: right;
+    width: 65%;
+    text-align: right;
+}
+
+
+/* services */
+ul#services li{
+    list-style: none;
+    padding: 20px;
+    border: #cccccc solid 1px;
+    margin-bottom: 5px;
+    background: #e6e6e6; 
+    border-radius: 10px;
+}
+
+ul#services li img{
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+
+
+footer{
+    padding: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #e8491d;
+    text-align: center;
+}
+
+/* Media Queries */
+@media(max-width: 768px){
+header #branding,
+header nav,
+header nav li,
+#newsletter h1,
+#newsletter form,
+#boxes .box,
+article#main-col,
+aside#sidebar{
+    float: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  header{
+      padding-bottom: 20px;
+  }
+
+  #showcase h1{
+      margin-top: 40px;
+  }
+
+  #newsletter button, .contact button{
+      display: block;
+      width: 100%;
+  }
+#newsletter form input[type="email"], .contact input, .contact textarea{
+    width: 100%;
+    margin-bottom: 5px;
+ }
+}
+
+

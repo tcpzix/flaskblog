@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/panel/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/panel/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/panel/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='favicon/panel/site.webmanifest') }}">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='styles/materialize/materialize.min.css') }}" media="screen,projection" />
+  <!-- Custom CSS -->
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}" />
+  <!-- CUSTOM JAVA-SCRIPT -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <!-- CUSTOM AJAX LIBRARY -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/easyhttp.js') }}"></script>
+  <title>Blog Panel</title>
+</head>
+<body class="grey lighten-4">
+
+  <!-- Section: Navbar -->
+  <nav>
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="{{ url_for('home') }}" class="brand-logo">tcpzix Admin</a>
+        <a href="#" data-activates="side-nav" class="button-collapse show-on-large right"><i
+            class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{{ url_for('panel') }}">Dashboard</a></li>
+          <li class="active"><a href="{{ url_for('posts') }}">Posts</a></li>
+          <li><a href="{{ url_for('categories') }}">Categories</a></li>
+          <li><a href="{{ url_for('comments') }}">Comments</a></li>
+          <li><a href="{{ url_for('users') }}">Users</a></li>
+        </ul>
+
+        <!-- Side nav -->
+        <ul id="side-nav" class="side-nav">
+          <li>
+            <div class="user-view">
+              <div class="background">
+                <img src="{{ url_for('static', filename='img/ocean.jpg') }}" />
+              </div>
+              <a href="#">
+                <img src="{{ url_for('static', filename='img/tcpzix-avatar.png') }}" alt="" class="circle" />
+              </a>
+              <a href="#">
+                <span class="name white-text">tcpzix</span>
+              </a>
+              <a href="#">
+                <span class="email white-text">tcpzix@gmail.com</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <a href="{{ url_for('panel') }}"><i class="material-icons">dashboard</i> Dashboard</a>
+          </li>
+          <li><a href="{{ url_for('posts') }}">Posts</a></li>
+          <li><a href="{{ url_for('categories') }}">Categories</a></li>
+          <li><a href="{{ url_for('comments') }}">Comments</a></li>
+          <li><a href="{{ url_for('users') }}">Users</a></li>
+          <li>
+            <div class="divider"></div>
+          </li>
+          <li>
+            <a class="subheader">Account Controls</a>
+          </li>
+          <li>
+            <a href="{{ url_for('logout') }}" class="waves-effect">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Section: Posts -->
+  <section class="section section-posts grey lighten-4">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Posts</span>
+              <table class="striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date Created</th>
+                    <th>Action</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for post in posts.items %}
+                    <tr>
+                      <td>{{ post.id }}</td>
+                      <td>{{ post.title }}</td>
+                      <td>{{ post.category.name }}</td>
+                      <td id="postdate{{ post.id }}"></td>
+                      <script>faDate('{{ post.id }}','{{ post.date_posted.strftime('%Y-%m-%d') }}', 'postdate');</script>
+                      <td>
+                        <a href="#edit-modal"  onclick='editPost({{ post.id }});' class="approve green-text modal-trigger">Edit</a> |
+                        <a href="#del-modal{{ post.id }}"   class=" deny red-text modal-trigger">Delete</a>
+                      </td>
+                      <td>
+                        <a href="{{ url_for('post', post_id=post.id) }}" class="btn blue lighten-2">Details</a>
+                      </td>
+                    </tr>
+                      
+                      <!-- Delete Post Modal -->
+                      <div id="del-modal{{ post.id }}" class="modal">
+                        <div class="modal-content">
+                          <h4 red-text>Delet Post</h4>
+                          <p>Are You Sure You Want To Delete This Post?</p>
+                          {{ post.title }}
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-close waves-effect waves-green btn-flat red-text" onclick="delPost(event, {{ post.id }});">Yes</a>
+                          <a href="#!" class="modal-close waves-effect waves-green btn-flat blue-text">No</a>
+                        </div>
+                      </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="container center">
+              <ul class="pagination">
+                  <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                  {% for page_num in posts.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+                  {% if page_num %}
+                  {% if posts.page == page_num %}
+                  <li class="active"><a href="{{ url_for('posts', page=page_num) }}">{{ page_num }}</a></li>
+                  {% else %}
+                  <li class="waves-effect"><a href="{{ url_for('posts', page=page_num) }}">{{ page_num }}</a>
+                  </li>
+                  {% endif %}
+                  {% else %}
+                  ...
+                  {% endif %}
+                  {% endfor %}
+                  <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    
+  <!-- Add Post Modal -->
+  <div id="post-modal" class="modal">
+    <div class="modal-content">
+      <h4>Add Post</h4>
+      <form>
+        <div class="input-field">
+          <input type="text" id="post-title">
+          <label for="title">Title</label>
+        </div>
+        <div class="input-field">
+          <select id="post-category">
+            <option value="" disabled selected>Select option</option>
+            {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+          <label>Category</label>
+        </div>
+        <div class="input-field">
+          <textarea name="new-post" id="post-content" class="materialize-textarea"></textarea>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <a href="#!" onclick="newPost(event)" class="modal-action modal-close btn blue white-text">Submit</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit Post Modal with meta tag for getting post if from editpost function -->
+  <meta id="postid-proxy">
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <h4>Add Post</h4>
+      <form>
+        <div class="input-field">
+          <input type="text" id="edit-title">
+          <label for="edit-title">Title</label>
+        </div>
+        <div class="input-field">
+          <select  id="edit-category">
+            {% for category in categories %}
+            <option value="{{category.id}}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+          <label>Category</label>
+        </div>
+        <div class="input-field">
+          <textarea name="editpost" id="edit-post" class="materialize-textarea"></textarea>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <a href="#!" onclick="updatePost(event)" class="modal-action modal-close btn blue white-text">Submit</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Footer -->
+  <footer class="section red lighten-1 center-align white-text">
+    <p>tcpzix blog admin panel Copyright 2020</p>
+  </footer>
+
+  <!-- Section: Fixed Action button -->
+  <div class="fixed-action-btn">
+    <a href="#post-modal" class="modal-trigger btn-floating btn-large red">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+
+  <!--preloader -->
+  <div class="loader preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- CKEditor  -->
+  <script type="text/javascript" src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+  <!-- Materialize js -->
+  <script type="text/javascript" src="{{ url_for('static', filename='/js/materialize.min.js') }}"></script>
+  <script>
+    //Hide Section
+    $(".section").hide();
+
+    setTimeout(function () {
+      $(document).ready(function () {
+        //Show Sections
+        $(".section").fadeIn();
+
+        //Hide preloader
+        $(".loader").fadeOut();
+
+        //Init Side nav
+        $(".button-collapse").sideNav();
+
+        //init modal
+        $(".modal").modal();
+
+        //Initial select
+        $("select").material_select();
+
+
+        CKEDITOR.replace('edit-post');
+        CKEDITOR.replace('new-post');
+      });
+    }, 1000);
+  </script>
+</body>
+</html>
+

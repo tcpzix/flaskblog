@@ -1,0 +1,173 @@
+{% extends 'layout.html'%} 
+{% set active_page = 'home' %} 
+
+{% block headmsg %}
+<h5 class="center-align">اینجا یه وبلاگ شخصیه که هنوز تکمیل نشده ولی مطالبش قابل خوندن هستن</h5>
+{% endblock headmsg %} 
+
+{% block body %}
+<section class="section section-body">
+  <div class="container">
+    <div class="row">
+
+      <!-- Section: Articls -->
+      <div class="col s12 m8 l8 right">
+        {% for post in posts.items %}
+        <div class="card card-posts">
+          <div class="card-content">
+            <div class="card-title">
+              <a href="{{ url_for('post', post_id=post.id) }}" class="right">{{ post.title }}</a>
+              <a href="{{ post.category.name }}">
+                <div class="chip left red-text">{{ post.category.name }}</div>
+              </a>
+              <br />
+            </div>
+            <!-- section: post date from db and convert to jalali with js function. Note: we should call the function after samll tag -->
+            <small id="postdate{{ post.id }}" class="red-text right"></small>
+            <script>
+              faDate('{{ post.id }}','{{ post.date_posted.strftime('%Y-%m-%d') }}', 'postdate');
+            </script>
+            <br />
+            <div class="post-content">
+              {{ post.content|safe }}
+            </div>
+          </div>
+
+          <div class="card-action">
+            <!-- red share button -->
+            <div
+              class="fixed-action-btn horizontal direction-top direction-left"
+              style="
+                position: absolute;
+                display: inline-block;
+                top: 4px;
+                right: 20px;">
+
+              <a class="btn-floating btn-large red">
+                <i class="large material-icons">share</i>
+              </a>
+              <ul>
+                <li>
+                  <a
+                    class="waves-effect waves-light btn-floating social google"
+                  >
+                    <i class="fa fa-google"></i>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="waves-effect waves-light btn-floating social soundcloud"
+                  >
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="waves-effect waves-light btn-floating social linkedin"
+                  >
+                    <i class="fa fa-telegram" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="waves-effect waves-light btn-floating social twitter"
+                  >
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="btn-floating yellow darken-1">
+                    <i class="samll material-icons">email</i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- end of red share button -->
+            <div class="chip" id="showlike">
+              <!-- call likepost function and pass postid as input -->
+              <img
+                onclick="likePost({{ post.id }});"
+                src="{{ url_for('static', filename='/img/like2.png') }}"
+                alt="Contact Person"/>
+              <span id="{{ post.id }}">{{ post.like_count }}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- End of Post section -->
+
+
+      <!-- Section: Side Cards -->
+      <div class="col s12 m4 l4 left">
+        <div class="card">
+          <div class="card-image my-media-links hide-on-small-only">
+            <img src="{{ url_for('static', filename='/img/slide-bg.jpg') }}" />
+            <span class="card-title">
+              <img
+                style="width: 70px; height: 70px; border-radius: 70px;"
+                src="{{ url_for('static', filename='/img/tcpzix-avatar.png') }}"/>
+              <a href="mailto:tcpzix@gmail.com?Subject=Hello%20tcp">
+                <h6>tcpzix@gmail.com</h6>
+              </a>
+              <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
+            </span>
+          </div>
+        </div>
+        <div class="card-panel linkedin white-text">
+          <h5 class="center-align">عضویت در خبرنامه</h5>
+          <form>
+            <div class="input-field">
+              <input type="email" id="email" />
+              <label for="email" class="white-text">Email</label>
+            </div>
+            <input
+              type="submit"
+              class="btn btn openid waves-effect white-text"
+              value="عضویت"
+            />
+          </form>
+        </div>
+        <div class="card" id="tcpzxi"></div>
+      </div>
+      <!-- End of side cards -->
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- Section: Pagination -->
+<div class="container center">
+  <ul class="pagination">
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_left</i></a>
+    </li>
+    {% for page_num in posts.iter_pages(left_edge=2, right_edge=2,
+    left_current=2, right_current=3) %} {% if page_num %} {% if posts.page ==
+    page_num %}
+    <li class="active">
+      <a href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+    </li>
+    {% else %}
+    <li class="waves-effect">
+      <a href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+    </li>
+    {% endif %} {% else %} ... {% endif %} {% endfor %}
+    <li class="waves-effect">
+      <a href="#!"><i class="material-icons">chevron_right</i></a>
+    </li>
+  </ul>
+</div>
+
+{% endblock body %} {% block script %}
+<!-- call truncate function for all posts -->
+<script>
+  const post = document.querySelectorAll(".post-content p");
+  post.forEach((post) => truncate(post, 100, "......"));
+</script>
+{% endblock script %}

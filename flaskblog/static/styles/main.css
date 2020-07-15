@@ -1,0 +1,144 @@
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir.eot');
+    src: url('farsifont/Vazir.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir.woff2') format('woff2'),
+         url('farsifont/Vazir.woff') format('woff'),
+         url('farsifont/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir-Bold.eot');
+    src: url('farsifont/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir-Bold.woff2') format('woff2'),
+         url('farsifont/Vazir-Bold.woff') format('woff'),
+         url('farsifont/Vazir-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir-Black.eot');
+    src: url('farsifont/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir-Black.woff2') format('woff2'),
+         url('farsifont/Vazir-Black.woff') format('woff'),
+         url('farsifont/Vazir-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir-Medium.eot');
+    src: url('farsifont/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir-Medium.woff2') format('woff2'),
+         url('farsifont/Vazir-Medium.woff') format('woff'),
+         url('farsifont/Vazir-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir-Light.eot');
+    src: url('farsifont/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir-Light.woff2') format('woff2'),
+         url('farsifont/Vazir-Light.woff') format('woff'),
+         url('farsifont/Vazir-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('farsifont/Vazir-Thin.eot');
+    src: url('farsifont/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+         url('farsifont/Vazir-Thin.woff2') format('woff2'),
+         url('farsifont/Vazir-Thin.woff') format('woff'),
+         url('farsifont/Vazir-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+body {
+    font-family: vazir;
+}
+
+
+header {
+    border-bottom: #e8491d 5px solid;
+}
+
+.footer-copyright {
+    border-top: #e8491d 5px solid !important;
+}
+
+#highlight {
+    color: #e8491d !important;
+}
+
+
+.newsletter-email {
+    margin-top: 10px;
+}
+
+.newsletter-button {
+    margin-top: 10px;
+}
+
+.my-nav, .main-footer {
+    background: #35424a !important;
+}
+
+
+.avatar {
+    
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+
+.my-media-links a, a:visited, a:hover, a:active {
+    color: inherit;
+}
+
+.card-posts {
+    background: #e6e6e6 !important; 
+    border: #cccccc solid 1px !important;
+    border-radius: 10px !important;
+}
+
+
+.inline-elements {
+    display: inline-flex;
+    margin-left: -19px;
+}
+
+/* panel css */
+
+.loader {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+  }
+  
+  .login {
+    margin-top: 70px;
+    margin-bottom: 70px;
+  }
+  
+  /* .btn-extended {
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+  }
+   */
+
+.embed-responsive {
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}

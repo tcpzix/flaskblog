@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% set active_page = 'create_post' %}
+
+{% block head%} 
+<!-- this is Summernote WYSIWYG Editor script and css -->
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+{% endblock %}
+
+{% block body %}
+	<div>
+		<form method="POST">
+			{{ form.hidden_tag() }}
+			<div>
+				{{ form.title.label }}
+				{{ form.title }}
+			</div>
+			<div>
+				{{ form.content.label }}
+				{{ form.content }}
+				<script>
+					$(document).ready(function() {
+					$('#content').summernote();
+					});
+				</script>
+			</div>
+			<div class="category">
+				{{ form.category.label}}
+				{{ form.category }}
+			</div>
+			{{ form.submit }}
+		</form>
+	</div>
+{% endblock %}

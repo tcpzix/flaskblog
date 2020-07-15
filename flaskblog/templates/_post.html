@@ -1,0 +1,60 @@
+{% for post in posts.items %}
+<section class="section">
+    <div class="row"> 
+        <div class="col s12 l8 right ">
+            <div class="card card-posts">
+                <div class="card-content right-align">
+                    <div class="card-title">
+                        <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                    </div>
+                    <!-- section: post date from db and convert to jalali with js function. Note: we should call the function after samll tag -->
+                    <small id="postdate{{ post.id }}" class="red-text"></small>
+                    <script>faDate('{{ post.id }}','{{ post.date_posted.strftime('%Y-%m-%d') }}', 'postdate');</script>
+                    <br>
+                    <p class="post-content">{{ post.content|safe }}</p>
+                </div>
+                <div class="card-action ">
+                    <div class="fixed-action-btn horizontal direction-top direction-left"
+                        style="position: absolute;display: inline-block;top: 4px;right: 20px;"">
+                        <a class=" btn-floating btn-large red">
+                        <i class="large material-icons">share</i>
+                        </a>
+                        <ul>
+                            <li><a class="btn-floating red"><i class="fab fa-twitter">eeeeeeeee</i></a></li>
+                            <li><a class="btn-floating yellow darken-1"><i class="fab fa-instagram"></i></a>
+                            </li>
+                            <li><a class="btn-floating green"><i class="fab fa-instagram"></i></a></li>
+                            <li><a class="btn-floating blue"><i class="fab fa-telegram"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="chip ">
+                        <img src="{{ url_for('static', filename='/img/like2.png') }}" alt="Contact Person">
+                        {{ post.like_count }}
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+<div class="divider"></div>
+
+<div class="container center">
+    <ul class="pagination">
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        {% for page_num in posts.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+        {% if page_num %}
+        {% if posts.page == page_num %}
+        <!-- with 'request.path' get the current url and cut  the category from it liek linux_article -->
+        <li class="active"><a href="{{ url_for(request.path[1:]+'_article', page=page_num) }}">{{ page_num }}</a></li>
+        {% else %}
+        <li class="waves-effect"><a href="{{ url_for(request.path[1:]+'_article', page=page_num) }}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+</div>

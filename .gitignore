@@ -2,8 +2,6 @@ flaskblog/templates/work-samples.html
 flaskblog/templates/oldlayout.html
 flaskblog/templates/old_post.html
 flaskblog/templates/oldindex.html
-flaskblog/site.db
-blog_env/
+env/
 todo.txt
-site.fb
-
+__pycache__/
